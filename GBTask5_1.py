@@ -3,22 +3,17 @@
 import os
 os.system('cls') # Clear Terminal
 
-finde_str = 'абв'
-str1 = 'Здравствуйте, как дела у вас? Что нового произошло за вчерашний день?'
-print(str1)
+srch = 'пр'
+srch_obj = 'Абв бав к прпод абв кз преабв'
 
-list_words = str1.split(' ') # Преобразуем в список по словам
-list_finde_sym = finde_str.split(' ')
-print(list_words)
+def str_romover(in_str:str, srch_str:str):
+    wrd_list = in_str.split()
+    print(wrd_list)
+    for i in wrd_list:
+        low_word = i.lower()
+        if srch_str in low_word:
+            wrd_list.remove(i)
+            
+    return   " ".join(wrd_list)      
 
-# new_list_words = []
-for word in list_words:
-    
-    for i in range(len(list_finde_sym)):
-        if list_finde_sym[i] in word:
-            list_words.remove(i)
-        
-print(list_words)        
-
-str1 = " ".join(list_words)
-print(str1)
+print(str_romover(srch_obj, srch))
