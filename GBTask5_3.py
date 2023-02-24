@@ -1,9 +1,21 @@
 # Создайте программу для игры в ""Крестики-нолики"".
+# Ситуация ничьи:
+        #      |     |     
+        #   O  |  X  |  X  
+        # _____|_____|_____
+        #      |     |     
+        #   X  |  O  |  O  
+        # _____|_____|_____
+        #      |     |     
+        #   O  |  X  |  X  
+        #      |     |     
 
 import os
 clear_terminal = lambda: os.system('cls') # Clear Terminal
 
-game_field = [i+1 for i in range(10)]
+FIELD_NUM = 9
+
+game_field = [i+1 for i in range(9)]
 win_combinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
 
 print(game_field)
@@ -24,6 +36,32 @@ def print_game_field(fld_list:list):
     print(f'\t  {fld_list[6]}  |  {fld_list[7]}  |  {fld_list[8]}') 
     print('\t     |     |') 
     print() 
+
+def input_check(fld_list:list, player_num, xo):
+    input_error = True # for do one cycle
+    in_num = None
+    
+    if(all(isinstance(i, str) for i in fld_list)):
+        print(f'Нет свободных ячеек...')
+        input_error = False
+        in_num = -1
+    else:    
+        while input_error:
+            in_num = input(f'Игрок №{player_num}({xo}), ваш ход: ')
+            if(not in_num.isdigit()):
+                print(f'Неверный ввод, введите число!!!')
+                input_error = True
+            else:
+                in_num = int(in_num)
+                if(in_num > len(fld_list) or (in_num == 0)):
+                    print(f'Неверный ввод, введите число от {1} до{len(fld_list)} !!!')
+                    input_error = True
+                elif(not isinstance(fld_list[in_num - 1], int)):
+                    input_error = True
+                    print(f'Неверный ввод, ячейка {in_num} занята!!!')
+                else:        
+                    input_error = False   
+    return in_num    
 
 # Сделать ход в ячейку
 def set_cell_field(fld_list:list, cell, xo):
@@ -56,7 +94,11 @@ def game_run(fld_list:list):
         else:
             xo = "O"
             
-        cell = int(input(f'Игрок №{player_num}({xo}), ваш ход: '))
+        # cell = int(input(f'Игрок №{player_num}({xo}), ваш ход: '))
+        cell = input_check(fld_list, player_num, xo)
+        if(cell == -1):
+            winner = 'Ничья! Повторите игру :)'
+            return winner
         
         set_cell_field(fld_list, cell, xo) # делаем ход в указанную ячейку
         winner = get_current_result(fld_list, win_combinations) # определим победителя
@@ -71,6 +113,8 @@ def game_run(fld_list:list):
     print_game_field(fld_list)
     return winner    
 
-print('-----=====*** Start Game XO *** =====-----')
+print('-----=====*** Start Game XO ***=====-----')
 player_winner = game_run(game_field)
-print(f'Победитель игрок: "{player_winner}"')
+print('***************************************************')
+print(f'Ура!!! Победитель игрок: "{player_winner}"')
+print('***************************************************')
