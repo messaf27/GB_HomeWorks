@@ -11,12 +11,13 @@ os.system('cls') # Clear Terminal
 
 TOTAL_SWEETS = 100
 MAX_SWEETS_INPUT = 28
+NUM_OF_PLAYERS = 2
 
-def inputPlayer(player_num:int, ply_cur_num:int , max_input:int, cur_balance:int):
+def inputPlayer(player_num:int, plr_sweets:int , max_input:int):
     input_error = True # for do one cycle
     in_num = None
     while input_error:
-        in_num = input(f'Ход игрока № {player_num}, (Ваших конфет: {ply_cur_num}) введите число: ')
+        in_num = input(f'Ход игрока № {player_num}, (Ваших конфет: {plr_sweets}) введите число: ')
         if(not in_num.isdigit()):
             print(f'Неверный ввод, введите число!!!')
             input_error = True
@@ -27,13 +28,7 @@ def inputPlayer(player_num:int, ply_cur_num:int , max_input:int, cur_balance:int
             in_num = int(in_num)      
             input_error = False
 
-    cur_balance = (cur_balance - (ply_cur_num + in_num))
-    
-    if(cur_balance < 0): 
-        cur_balance = 0   
-        print(f'Конфет больше нету!!! ({cur_balance})')  
-       
-    return cur_balance
+    return in_num
 
 def play_game(mum_of_players:int):
     move_number = 0
@@ -49,7 +44,15 @@ def play_game(mum_of_players:int):
         print('---------------------------------------------------------')
         for player in range(mum_of_players):
             move_number += 1
-            sweets_balance = inputPlayer(player + 1, player_list[player], MAX_SWEETS_INPUT, sweets_balance)
+            # sweets_balance = inputPlayer(player + 1, player_list[player], MAX_SWEETS_INPUT, sweets_balance)
+            input_num = inputPlayer(player + 1, player_list[player], MAX_SWEETS_INPUT)
+            player_list[player] += input_num
+            sweets_balance = (sweets_balance - input_num)
+    
+            if(sweets_balance < 0): 
+                sweets_balance = 0   
+                print(f'Конфет больше нету!!! ({sweets_balance})')  
+                    
             if sweets_balance == 0:
                 player_winner_num = player + 1
                 print('***************************************************')
@@ -61,4 +64,4 @@ def play_game(mum_of_players:int):
     return player_winner_num
  
 # ========== Запуск Игры  ================= 
-play_game(2) # 2 игрока
+play_game(NUM_OF_PLAYERS) # 2 игрока
