@@ -11,7 +11,7 @@ NUM_OF_VOWEL = 4
 
 
 def is_vowel(char):
-    for elem in VOVELS_LIST:
+    for elem in VOWELS_LIST:
         if(elem == char):
             return True
     return False
@@ -30,7 +30,7 @@ def rhythm_str_is_ok(rtm_str, num_vowel):
 def input_rhythm_process(in_str_list:list):
     result = False
     for curr_str in in_str_list:
-      if not rhythm_str_is_ok(curr_str, NUM_OF_VOVEL):
+      if not rhythm_str_is_ok(curr_str, NUM_OF_VOWEL):
           return False
     
     return True  
