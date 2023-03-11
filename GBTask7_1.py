@@ -6,8 +6,8 @@ rhythm_ok = "парам-пам-пам"
 rhythm_bad = "пам-парам"
 
 # Constants
-VOVELS_LIST = ['а', 'у', 'о', 'ы', 'и', 'э', 'я', 'ю', 'ё', 'е']
-NUM_OF_VOVEL = 4
+VOWELS_LIST = ['а', 'у', 'о', 'ы', 'и', 'э', 'я', 'ю', 'ё', 'е']
+NUM_OF_VOWEL = 4
 
 
 def is_vowel(char):
